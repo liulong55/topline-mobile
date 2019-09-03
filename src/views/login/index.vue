@@ -30,10 +30,18 @@ export default {
   methods: {
     async  handleLogin () {
       try {
-        const res = await login(this.user)
-        console.log(res)
+        // data就是接口返回数据中的data(因为响应拦截器做了处理)
+        const data = await login(this.user)
+        console.log(data)
+        // 储存登录的状态
+        // 跳转到首页
+        this.$router.push('/')
+        // 登录成功弹框
+        this.$toast.success('登录成功')
       } catch (error) {
         console.log(error)
+        // 登录失败弹框
+        this.$toast.fail('登录失败')
       }
     }
   }

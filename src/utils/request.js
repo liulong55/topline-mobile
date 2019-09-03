@@ -13,22 +13,20 @@ instance.defaults.transformResponse = [function (data) {
   }
 }]
 
-// Add a request interceptor
+// 请求拦截器
 instance.interceptors.request.use(function (config) {
-  // Do something before request is sent
   return config
 }, function (error) {
-  // Do something with request error
   return Promise.reject(error)
 })
 
-// Add a response interceptor
+// 响应拦截器
 instance.interceptors.response.use(function (response) {
-  // Do something with response data
-  console.log(response)
-  return response
+//   console.log(response)
+// 接口返回的数据中都有data,在此处统一返回接口返回的data
+// 如果接口返回的数据中没有data,此时返回axios响应对象data属性 ,这是为了直接取那俩返回值token
+  return response.data.data || response.data
 }, function (error) {
-  // Do something with response error
   return Promise.reject(error)
 })
 
