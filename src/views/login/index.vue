@@ -6,12 +6,19 @@
     <van-cell-group>
       <van-field
        v-model="user.mobile"
-        v-validate="'required'"
+        v-validate="'required|digits:11'"
         name='mobile'
+        clearable
         :error-message="errors.first('mobile')"
         placeholder="请输入手机号"
          left-icon="phone-o" />
-      <van-field v-model="user.code" placeholder="请输入验证码" left-icon="star-o">
+      <van-field
+       v-model="user.code"
+         v-validate="'required|digits:6'"
+        name='code'
+        :error-message="errors.first('code')"
+        placeholder="请输入验证码"
+         left-icon="star-o">
           <van-button slot="button" size="small" type="primary">发送验证码</van-button>
       </van-field>
     </van-cell-group>
