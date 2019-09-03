@@ -42,6 +42,27 @@ export default {
       }
     }
   },
+  created () {
+    // 配置VeeValidate的自定义验证信息  这个在VeeValidate中的错误信息中找
+    const dict = {
+      // 验证的文本框
+      custom: {
+        mobile: {
+          // 验证规则失败之后的提升信息
+          required: '请输入手机号码',
+          digits: '手机号码必须是11位的数组'
+
+        },
+        code: {
+          required: '请输入验证码',
+          digits: '验证码必须是6位的数字'
+        }
+      }
+    }
+
+    // or use the instance method
+    this.$validator.localize('custom', dict)
+  },
   methods: {
     // 点击按钮,处理登录
     // 把状态写成简单写法
