@@ -16,6 +16,8 @@
 </template>
 
 <script>
+// 使用简单写法
+import { mapMutations } from 'vuex'
 import { login } from '../../api/user'
 export default {
   name: 'login',
@@ -28,13 +30,19 @@ export default {
     }
   },
   methods: {
+    // 点击按钮,处理登录
+    // 把状态写成简单写法
+    ...mapMutations(['setUser']),
     async  handleLogin () {
       try {
         // data就是接口返回数据中的data(因为响应拦截器做了处理)
         const data = await login(this.user)
         console.log(data)
-        // 储存登录的状态 1vuex
-        this.$store.commit('setUser', data)
+        // 储存登录的状态 1.vuex   这个data是令牌
+        // this.$store.commit('setUser', data)  //这是麻烦写法
+        this.setUser(data) // 这是简短写法
+        // 2.本地储存,都是在store完成的
+
         // 跳转到首页
         this.$router.push('/')
         // 登录成功弹框
