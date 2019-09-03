@@ -33,7 +33,8 @@ export default {
         // data就是接口返回数据中的data(因为响应拦截器做了处理)
         const data = await login(this.user)
         console.log(data)
-        // 储存登录的状态
+        // 储存登录的状态 1vuex
+        this.$store.commit('setUser', data)
         // 跳转到首页
         this.$router.push('/')
         // 登录成功弹框
