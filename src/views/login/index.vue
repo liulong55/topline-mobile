@@ -23,7 +23,13 @@
       </van-field>
     </van-cell-group>
       <div class="login-btn">
-        <van-button class="btn" type="info" @click="handleLogin">登录</van-button>
+        <van-button
+         class="btn"
+         :loading='loading'
+        loading-text="登录中..."
+        loading-type="spinner"
+        type="info"
+           @click="handleLogin">登录</van-button>
       </div>
   </div>
 </template>
@@ -40,7 +46,8 @@ export default {
       user: {
         mobile: '13911111111',
         code: '246810'
-      }
+      },
+      loading: false
     }
   },
   created () {
@@ -51,7 +58,7 @@ export default {
         mobile: {
           // 验证规则失败之后的提升信息
           required: '请输入手机号码',
-          digits: '手机号码必须是11位的数组'
+          digits: '手机号码必须是11位的数字'
 
         },
         code: {
@@ -69,6 +76,7 @@ export default {
     // 把状态写成简单写法
     ...mapMutations(['setUser']),
     async  handleLogin () {
+      this.loading = true
       try {
         // data就是接口返回数据中的data(因为响应拦截器做了处理)
         // const data = await login(this.user)
@@ -87,6 +95,7 @@ export default {
         const valid = await this.$validator.validate()
         // 验证失败
         if (!valid) {
+          this.loading = false
           return
         }
         // 验证成功
@@ -99,6 +108,7 @@ export default {
         // 登录失败弹框
         this.$toast.fail('登录失败')
       }
+      this.loading = false
     }
   }
 
