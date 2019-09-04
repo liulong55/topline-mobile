@@ -1,5 +1,6 @@
 import axios from 'axios'
 import JSONbig from 'json-bigint'
+import store from '../store/index' // 把状态里的token令牌引入
 const instance = axios.create({
   baseURL: 'http://ttapi.research.itcast.cn'
 })
@@ -15,6 +16,11 @@ instance.defaults.transformResponse = [function (data) {
 
 // 请求拦截器
 instance.interceptors.request.use(function (config) {
+  console.log(config)
+  // 注入token令牌
+  if (store.state.user) { // 这个user里有俩令牌,这里我们用token
+    config.headers.Authorization = `Bearer ${store.state.user.token}`
+  }
   return config
 }, function (error) {
   return Promise.reject(error)
