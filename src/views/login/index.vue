@@ -32,6 +32,7 @@
 // 使用简单写法
 import { mapMutations } from 'vuex'
 import { login } from '../../api/user'
+
 export default {
   name: 'login',
   data () {
@@ -70,17 +71,30 @@ export default {
     async  handleLogin () {
       try {
         // data就是接口返回数据中的data(因为响应拦截器做了处理)
-        const data = await login(this.user)
-        console.log(data)
-        // 储存登录的状态 1.vuex   这个data是令牌
-        // this.$store.commit('setUser', data)  //这是麻烦写法
-        this.setUser(data) // 这是简短写法
-        // 2.本地储存,都是在store完成的
+        // const data = await login(this.user)
+        // console.log(data)
+        // // 储存登录的状态 1.vuex   这个data是令牌
+        // // this.$store.commit('setUser', data)  //这是麻烦写法
+        // this.setUser(data) // 这是简短写法
+        // // 2.本地储存,都是在store完成的
 
-        // 跳转到首页
-        this.$router.push('/')
-        // 登录成功弹框
-        this.$toast.success('登录成功')
+        // // 跳转到首页
+        // this.$router.push('/')
+        // // 登录成功弹框
+        // this.$toast.success('登录成功')
+
+        // 表单验证
+        this.$validator.validate().then(async valid => {
+          // 验证失败
+          if (!valid) {
+            return
+          }
+          // 验证成功
+          const data = await login(this.user)
+          this.setUser(data)
+          this.$router.push('/')
+          this.$toast.success('登录成功')
+        })
       } catch (error) {
         console.log(error)
         // 登录失败弹框

@@ -9,7 +9,11 @@ import zhCN from 'vee-validate/dist/locale/zh_CN' // 导入中文包
 import 'vant/lib/index.css'
 import '../src/styles/index.less'
 Vue.use(Vant)
-Vue.use(VeeValidate)// 配置插件VeeValidate
+Vue.use(VeeValidate, {
+  // 文本框中触发验证的事件，默认是input
+  // 如果为空的话，文本框输入过程中不验证，需要调用validate方法验证
+  events: ''
+})// 配置插件VeeValidate
 Validator.localize('zh_CN', zhCN) // 配置中文
 Vue.config.productionTip = false
 
