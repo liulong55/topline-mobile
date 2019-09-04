@@ -8,7 +8,6 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'tabbar',
       component: tabbar,
       children: [
         {
