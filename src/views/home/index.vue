@@ -6,10 +6,13 @@
     <van-tabs animated v-model="activeIndex">
       <!-- 遍历标签页,显示频道列表 -->
       <van-tab :title="item.name" v-for="item in channels" :key="item.id">
+        <!-- 下拉刷新 -->
+        <van-pull-refresh v-model="currentChannel.isLoading" @refresh="onRefresh">
         <!-- 文章列表,不同的频道有不同的列表 -->
         <van-list v-model="currentChannel.loading" :finished="currentChannel.finished" finished-text="没有更多了" @load="onLoad">
           <van-cell v-for="item in currentChannel.articled" :key="item.art_id.toString()" :title="item.title" />
         </van-list>
+        </van-pull-refresh>
       </van-tab>
     </van-tabs>
   </div>
@@ -21,9 +24,6 @@ import { getArticles } from '../../api/article'
 export default {
   data () {
     return {
-      list: [],
-      loading: false,
-      finished: false,
       channels: [], // 储存请求获取到的频道列表
       activeIndex: 0 // 通过该index,可以找到当前的频道对象 ,v-m是tab默认的tab索引
     }
@@ -53,11 +53,21 @@ export default {
       data.channels.forEach((channel) => {
         channel.timestamp = null
         channel.articled = []
+        // 上拉加载
         channel.loading = false
         channel.finished = false
+        // 下拉刷新
+        channel.isLoading = false
       })
       this.channels = data.channels
       //   console.log(this.channels)
+    },
+    onRefresh () {
+      setTimeout(() => {
+        this.$toast('刷新成功')
+        this.currentChannel.isLoading = false
+        this.count++
+      }, 500)
     }
   },
   computed: {
