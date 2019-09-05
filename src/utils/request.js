@@ -16,7 +16,6 @@ instance.defaults.transformResponse = [function (data) {
 
 // 请求拦截器
 instance.interceptors.request.use(function (config) {
-  console.log(config)
   // 注入token令牌
   if (store.state.user) { // 这个user里有俩令牌,这里我们用token
     config.headers.Authorization = `Bearer ${store.state.user.token}`

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import tabbar from '../views/tabbar.vue'
 import home from '../views/home/index.vue'
+import wq from '../views/answers/index.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -14,6 +15,10 @@ export default new Router({
           path: '',
           name: 'home',
           component: home
+        },
+        {
+          path: '/wq',
+          component: wq
         }
       ]
     },
