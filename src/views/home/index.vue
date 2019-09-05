@@ -3,8 +3,10 @@
     <!-- 导航头 -->
     <van-nav-bar title="首页" fixed />
     <!-- 频道列表 -->
-    <van-tabs animated>
+    <van-tabs animated v-model="activeIndex">
+      <!-- 遍历标签页,显示频道列表 -->
       <van-tab :title="item.name" v-for="item in channels" :key="item.id">
+        <!-- 文章列表,不同的频道有不同的列表 -->
         <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
           <van-cell v-for="item in list" :key="item" :title="item" />
         </van-list>
@@ -21,7 +23,8 @@ export default {
       list: [],
       loading: false,
       finished: false,
-      channels: [] // 储存请求获取到的频道列表
+      channels: [], // 储存请求获取到的频道列表
+      activeIndex: 0 // 通过该index,可以找到当前的频道对象 ,v-m是tab默认的tab索引
     }
   },
   methods: {
