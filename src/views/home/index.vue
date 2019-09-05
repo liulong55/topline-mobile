@@ -7,11 +7,41 @@
       <!-- 遍历标签页,显示频道列表 -->
       <van-tab :title="item.name" v-for="item in channels" :key="item.id">
         <!-- 下拉刷新 -->
-        <van-pull-refresh v-model="currentChannel.pullLoading" @refresh="onRefresh" :success-text='success'>
-        <!-- 文章列表,不同的频道有不同的列表 -->
-        <van-list v-model="currentChannel.loading" :finished="currentChannel.finished" finished-text="没有更多了" @load="onLoad">
-          <van-cell v-for="item in currentChannel.articled" :key="item.art_id.toString()" :title="item.title" />
-        </van-list>
+        <van-pull-refresh
+          v-model="currentChannel.pullLoading"
+          @refresh="onRefresh"
+          :success-text="success"
+        >
+          <!-- 文章列表,不同的频道有不同的列表 -->
+          <van-list
+            v-model="currentChannel.loading"
+            :finished="currentChannel.finished"
+            finished-text="没有更多了"
+            @load="onLoad"
+          >
+            <van-cell
+              v-for="item in currentChannel.articled"
+              :key="item.art_id.toString()"
+              :title="item.title"
+            >
+              <div slot="label">
+                <!-- grid 显示封面
+                  article.cover.type   0 没有图片   1 1个图片 3 3个图片
+                -->
+                <van-grid v-if="item.cover.type" :border="false" :column-num="3">
+                  <van-grid-item v-for="(img,index) in item.cover.images" :key="img+index">
+                    <van-image height="80" :src="img" />
+                  </van-grid-item>
+                </van-grid>
+                <p>
+                  <span>{{item.aut_name}}</span>&nbsp;
+                  <span>{{item.comm_count}}</span>&nbsp;
+                  <span>{{item.pubdate}}</span>&nbsp;
+                  <van-icon name="cross" class="close" />
+                </p>
+              </div>
+            </van-cell>
+          </van-list>
         </van-pull-refresh>
       </van-tab>
     </van-tabs>
@@ -27,7 +57,6 @@ export default {
       channels: [], // 储存请求获取到的频道列表
       activeIndex: 0, // 通过该index,可以找到当前的频道对象 ,v-m是tab默认的tab索引
       success: '' // 下拉更新完毕之后显示，成功的提示
-
     }
   },
   methods: {
@@ -53,7 +82,7 @@ export default {
       const data = await getchannels()
       // 给所有的频道设置,事件搓和文章数组
       console.log(data)
-      data.channels.forEach((channel) => {
+      data.channels.forEach(channel => {
         channel.timestamp = null
         channel.articled = []
         // 上拉加载
@@ -66,7 +95,7 @@ export default {
       //   console.log(this.channels)
     },
     // 下拉加载更多
-    async  onRefresh () {
+    async onRefresh () {
       // 发送请求,获取当前频道对象
       const data = await getArticles({
         channelId: this.currentChannel.id,
@@ -108,5 +137,8 @@ export default {
     margin-top: 90px;
     margin-bottom: 50px;
   }
+}
+.close {
+  float: right;
 }
 </style>
