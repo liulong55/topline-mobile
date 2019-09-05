@@ -41,9 +41,10 @@
                   </van-grid-item>
                 </van-grid>
                 <p>
+                  <!-- 作者,评论数量,评论时间 -->
                   <span>{{item.aut_name}}</span>&nbsp;
                   <span>{{item.comm_count}}</span>&nbsp;
-                  <span>{{item.pubdate}}</span>&nbsp;
+                  <span>{{item.pubdate |fmtDate}}</span>&nbsp;
                   <van-icon name="cross" class="close" />
                 </p>
               </div>
