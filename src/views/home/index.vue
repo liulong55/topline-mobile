@@ -8,7 +8,7 @@
       <van-tab :title="item.name" v-for="item in channels" :key="item.id">
         <!-- 文章列表,不同的频道有不同的列表 -->
         <van-list v-model="currentChannel.loading" :finished="currentChannel.finished" finished-text="没有更多了" @load="onLoad">
-          <van-cell v-for="item in currentChannel.articled" :key="item.art_id" :title="item.title" />
+          <van-cell v-for="item in currentChannel.articled" :key="item.art_id.toString()" :title="item.title" />
         </van-list>
       </van-tab>
     </van-tabs>
