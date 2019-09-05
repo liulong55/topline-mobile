@@ -7,8 +7,8 @@
       <!-- 遍历标签页,显示频道列表 -->
       <van-tab :title="item.name" v-for="item in channels" :key="item.id">
         <!-- 文章列表,不同的频道有不同的列表 -->
-        <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-          <van-cell v-for="item in list" :key="item" :title="item" />
+        <van-list v-model="currentChannel.loading" :finished="currentChannel.finished" finished-text="没有更多了" @load="onLoad">
+          <van-cell v-for="item in currentChannel.articled" :key="item.art_id" :title="item.title" />
         </van-list>
       </van-tab>
     </van-tabs>
@@ -17,6 +17,7 @@
 
 <script>
 import { getchannels } from '../../api/channel'
+import { getArticles } from '../../api/article'
 export default {
   data () {
     return {
@@ -28,26 +29,41 @@ export default {
     }
   },
   methods: {
-    onLoad () {
-      // 异步更新数据
-      setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1)
-        }
-        // 加载状态结束
-        this.loading = false
-
-        // 数据全部加载完成
-        if (this.list.length >= 40) {
-          this.finished = true
-        }
-      }, 500)
+    async onLoad () {
+      // 发送请求,获取当前频道对象
+      const data = await getArticles({
+        channelId: this.currentChannel.id,
+        timestamp: this.currentChannel.timestamp || Date.now(),
+        withTop: 1
+      })
+      console.log(data)
+      // 记录文章列表,记录最后一条数据的事件搓
+      this.currentChannel.timestamp = data.pre_timestamp
+      this.currentChannel.articled.push(...data.results)
+      this.currentChannel.loading = false
+      if (data.results.length === 0) {
+        this.currentChannel.finished = true
+      }
     },
     // 渲染频道列表
     async loadingchannels () {
       const data = await getchannels()
+      // 给所有的频道设置,事件搓和文章数组
+      console.log(data)
+      data.channels.forEach((channel) => {
+        channel.timestamp = null
+        channel.articled = []
+        channel.loading = false
+        channel.finished = false
+      })
       this.channels = data.channels
       //   console.log(this.channels)
+    }
+  },
+  computed: {
+    // 计算属性,返回当前的频道对象
+    currentChannel () {
+      return this.channels[this.activeIndex]
     }
   },
   created () {
