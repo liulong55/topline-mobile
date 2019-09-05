@@ -7,7 +7,7 @@
       <!-- 遍历标签页,显示频道列表 -->
       <van-tab :title="item.name" v-for="item in channels" :key="item.id">
         <!-- 下拉刷新 -->
-        <van-pull-refresh v-model="currentChannel.isLoading" @refresh="onRefresh">
+        <van-pull-refresh v-model="currentChannel.pullLoading" @refresh="onRefresh" :success-text='success'>
         <!-- 文章列表,不同的频道有不同的列表 -->
         <van-list v-model="currentChannel.loading" :finished="currentChannel.finished" finished-text="没有更多了" @load="onLoad">
           <van-cell v-for="item in currentChannel.articled" :key="item.art_id.toString()" :title="item.title" />
@@ -25,21 +25,24 @@ export default {
   data () {
     return {
       channels: [], // 储存请求获取到的频道列表
-      activeIndex: 0 // 通过该index,可以找到当前的频道对象 ,v-m是tab默认的tab索引
+      activeIndex: 0, // 通过该index,可以找到当前的频道对象 ,v-m是tab默认的tab索引
+      success: '' // 下拉更新完毕之后显示，成功的提示
+
     }
   },
   methods: {
     async onLoad () {
       // 发送请求,获取当前频道对象
       const data = await getArticles({
-        channelId: this.currentChannel.id,
-        timestamp: this.currentChannel.timestamp || Date.now(),
-        withTop: 1
+        channelId: this.currentChannel.id, // 频道的id
+        timestamp: this.currentChannel.timestamp || Date.now(), // 时间撮
+        withTop: 1 // 是否包含置顶1,0不包括
       })
       console.log(data)
       // 记录文章列表,记录最后一条数据的事件搓
       this.currentChannel.timestamp = data.pre_timestamp
       this.currentChannel.articled.push(...data.results)
+
       this.currentChannel.loading = false
       if (data.results.length === 0) {
         this.currentChannel.finished = true
@@ -57,17 +60,24 @@ export default {
         channel.loading = false
         channel.finished = false
         // 下拉刷新
-        channel.isLoading = false
+        channel.pullLoading = false
       })
       this.channels = data.channels
       //   console.log(this.channels)
     },
-    onRefresh () {
-      setTimeout(() => {
-        this.$toast('刷新成功')
-        this.currentChannel.isLoading = false
-        this.count++
-      }, 500)
+    // 下拉加载更多
+    async  onRefresh () {
+      // 发送请求,获取当前频道对象
+      const data = await getArticles({
+        channelId: this.currentChannel.id,
+        timestamp: Date.now(), // 下拉刷新是当前的时间撮
+        withTop: 1
+      })
+      // 把数组放到数组的最前面(最新数据)
+      this.currentChannel.articled.unshift(...data.results)
+      this.success = `加载了${data.results.length}条数据`
+      // 设置加载完成
+      this.currentChannel.pullLoading = false
     }
   },
   computed: {
