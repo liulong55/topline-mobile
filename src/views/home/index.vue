@@ -45,7 +45,7 @@
                   <span>{{item.aut_name}}</span>&nbsp;
                   <span>{{item.comm_count}}</span>&nbsp;
                   <span>{{item.pubdate |fmtDate}}</span>&nbsp;
-                  <van-icon name="cross" class="close" />
+                  <van-icon name="cross" class="close" @click="showMoreAction=true" />
                 </p>
               </div>
             </van-cell>
@@ -54,7 +54,7 @@
       </van-tab>
     </van-tabs>
     <!-- 弹出层组件-moreAction -->
-     <more-action></more-action>
+     <more-action v-model="showMoreAction"></more-action>
      <!-- 底部弹出层 -->
      <!-- <channel-Edit></channel-Edit> -->
   </div>
@@ -79,7 +79,8 @@ export default {
     return {
       channels: [], // 储存请求获取到的频道列表
       activeIndex: 0, // 通过该index,可以找到当前的频道对象 ,v-m是tab默认的tab索引
-      success: '' // 下拉更新完毕之后显示，成功的提示
+      success: '', // 下拉更新完毕之后显示，成功的提示
+      showMoreAction: false
     }
   },
   methods: {
@@ -136,6 +137,11 @@ export default {
     // 计算属性,返回当前的频道对象
     currentChannel () {
       return this.channels[this.activeIndex]
+    }
+  },
+  watch: {
+    showMoreAction () {
+      console.log(this.showMoreAction)
     }
   },
   created () {
