@@ -53,6 +53,8 @@
         </van-pull-refresh>
       </van-tab>
     </van-tabs>
+    <!-- 弹出层组件-moreAction -->
+     <more-action></more-action>
   </div>
 </template>
 
@@ -61,9 +63,14 @@ import { getchannels } from '../../api/channel'
 import { getArticles } from '../../api/article'
 import Vue from 'vue'
 import { Lazyload } from 'vant'
+import MoreAction from '../home/components/MoreAction' // 加载弹出层组件
 // options 为可选参数，无则不传
 Vue.use(Lazyload)
 export default {
+  name: 'home',
+  components: {
+    MoreAction // 弹出层组件
+  },
   data () {
     return {
       channels: [], // 储存请求获取到的频道列表
