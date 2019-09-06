@@ -55,6 +55,8 @@
     </van-tabs>
     <!-- 弹出层组件-moreAction -->
      <more-action></more-action>
+     <!-- 底部弹出层 -->
+     <!-- <channel-Edit></channel-Edit> -->
   </div>
 </template>
 
@@ -63,13 +65,15 @@ import { getchannels } from '../../api/channel'
 import { getArticles } from '../../api/article'
 import Vue from 'vue'
 import { Lazyload } from 'vant'
-import MoreAction from '../home/components/MoreAction' // 加载弹出层组件
+import MoreAction from '../home/components/MoreAction'
+// import channelEdit from '../home/components/ChannelEdit' // 加载弹出层组件
 // options 为可选参数，无则不传
 Vue.use(Lazyload)
 export default {
   name: 'home',
   components: {
     MoreAction // 弹出层组件
+    // channelEdit
   },
   data () {
     return {
@@ -150,6 +154,7 @@ export default {
     position: fixed;
     top: 46px;
     left: 0;
+    right: 15px;
     z-index: 100;
   }
   /deep/ .van-tabs__content {

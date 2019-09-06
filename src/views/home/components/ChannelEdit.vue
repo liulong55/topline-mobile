@@ -1,13 +1,13 @@
 <template>
-  <van-dialog v-model="show" :showConfirmButton="false"
-    closeOnClickOverlay>
-        HAHA
-  </van-dialog>
+    <van-popup
+  v-model="show"
+  position="bottom"
+  :style="{ height: '80%' }"
+/>
 </template>
 
 <script>
 export default {
-  name: 'MoreAction',
   data () {
     return {
       show: true
@@ -17,4 +17,5 @@ export default {
 </script>
 
 <style>
+
 </style>
