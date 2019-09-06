@@ -55,7 +55,7 @@
       </van-tab>
     </van-tabs>
     <!-- 弹出层组件-moreAction -->
-     <more-action v-if="currentArticle" :article='currentArticle' v-model="showMoreAction"></more-action>
+     <more-action @handleSuccess='handleSuccess' v-if="currentArticle" :article='currentArticle' v-model="showMoreAction"></more-action>
      <!-- 底部弹出层 -->
      <!-- <channel-Edit></channel-Edit> -->
   </div>
@@ -138,6 +138,19 @@ export default {
     handleAction (article) {
       this.showMoreAction = true
       this.currentArticle = article
+    },
+    // more-action组件中操作成功执行的方法
+    handleSuccess () {
+      this.showMoreAction = false // 隐藏
+      // 去掉当前的文章数据
+      // 找到当前文章在数组中的索引
+      // findindex()查找第一个满足条件的元素的索引
+      const articles = this.currentChannel.articled
+      const index = articles.findIndex((item) => {
+        return item.art_id === this.currentArticle.art_id
+      })
+      // 删除指定位置的元素
+      articles.splice(index, 1)
     }
   },
   computed: {

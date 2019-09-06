@@ -55,6 +55,8 @@ export default {
       try {
         await dislikeArticle(this.article.art_id)
         this.$toast.success('操作成功')
+        // 通知父组件,隐藏弹出栏,删掉当前点击的文章
+        this.$emit('handleSuccess')
       } catch (error) {
         this.$toast.fail('操作失败')
       }
