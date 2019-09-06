@@ -45,7 +45,8 @@
                   <span>{{item.aut_name}}</span>&nbsp;
                   <span>{{item.comm_count}}</span>&nbsp;
                   <span>{{item.pubdate |fmtDate}}</span>&nbsp;
-                  <van-icon name="cross" class="close" @click="showMoreAction=true" />
+                  <!-- 点击×按钮,记录当前的文章对象 -->
+                  <van-icon name="cross" class="close" @click="handleAction(item)" />
                 </p>
               </div>
             </van-cell>
@@ -54,7 +55,7 @@
       </van-tab>
     </van-tabs>
     <!-- 弹出层组件-moreAction -->
-     <more-action v-model="showMoreAction"></more-action>
+     <more-action v-if="currentArticle" :article='currentArticle' v-model="showMoreAction"></more-action>
      <!-- 底部弹出层 -->
      <!-- <channel-Edit></channel-Edit> -->
   </div>
@@ -80,7 +81,8 @@ export default {
       channels: [], // 储存请求获取到的频道列表
       activeIndex: 0, // 通过该index,可以找到当前的频道对象 ,v-m是tab默认的tab索引
       success: '', // 下拉更新完毕之后显示，成功的提示
-      showMoreAction: false
+      showMoreAction: false,
+      currentArticle: null // 点击×的时候,记录的当前文章对象
     }
   },
   methods: {
@@ -131,6 +133,11 @@ export default {
       this.success = `加载了${data.results.length}条数据`
       // 设置加载完成
       this.currentChannel.pullLoading = false
+    },
+    // 这是把点击×的时候传过去个对象,点击×按钮,弹出MoreAction,并且记录对应的文章对象
+    handleAction (article) {
+      this.showMoreAction = true
+      this.currentArticle = article
     }
   },
   computed: {

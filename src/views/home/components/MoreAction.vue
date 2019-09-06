@@ -2,9 +2,9 @@
   <van-dialog :showConfirmButton="false"
     closeOnClickOverlay :value='value' @input="$emit('input',$event)">
     <van-cell-group v-show="!showReports">
-        <van-cell title="不感兴趣"/>
-         <van-cell title="反感垃圾内容" is-link @click='showReports=true'/>
-          <van-cell title="拉黑作者"/>
+        <van-cell title="不感兴趣" icon="location-o"/>
+         <van-cell title="反感垃圾内容" icon="location-o" is-link @click='showReports=true'/>
+          <van-cell title="拉黑作者" icon="location-o"/>
     </van-cell-group>
     <!-- 举报文章 -->
       <van-cell-group v-show="showReports">
@@ -23,12 +23,22 @@ export default {
     value: {
       type: Boolean,
       required: true
+    },
+    // 接收父组件传递的文章对象
+    article: {
+      type: Object,
+      required: true
     }
   },
   data () {
     return {
       showReports: false
     }
+  },
+  created () {
+    // 测试
+    console.log(this.article.art_id)
+    console.log(this.article)
   }
 }
 </script>
