@@ -57,7 +57,7 @@
     <!-- 弹出层组件-moreAction -->
      <more-action @handleSuccess='handleSuccess' v-if="currentArticle" :article='currentArticle' v-model="showMoreAction"></more-action>
      <!-- 底部弹出层 -->
-     <!-- <channel-Edit></channel-Edit> -->
+     <channel-Edit></channel-Edit>
   </div>
 </template>
 
@@ -68,14 +68,14 @@ import Vue from 'vue'
 import { Lazyload } from 'vant'
 import { getItem, setItem } from '../../utils/localStorage'
 import MoreAction from '../home/components/MoreAction'
-// import channelEdit from '../home/components/ChannelEdit' // 加载弹出层组件
+import channelEdit from '../home/components/ChannelEdit' // 加载弹出层组件
 // options 为可选参数，无则不传
 Vue.use(Lazyload)
 export default {
   name: 'home',
   components: {
-    MoreAction // 弹出层组件
-    // channelEdit
+    MoreAction, // 弹出层组件
+    channelEdit // 底部弹出层组件
   },
   data () {
     return {
