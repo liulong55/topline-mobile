@@ -59,7 +59,7 @@
     <!-- 弹出层组件-moreAction -->
      <more-action @handleSuccess='handleSuccess' v-if="currentArticle" :article='currentArticle' v-model="showMoreAction"></more-action>
      <!-- 底部弹出层 -->
-     <channel-Edit :channels='channels' v-model="showChannelEdit"></channel-Edit>
+     <channel-Edit :active='activeIndex' :channels='channels' v-model="showChannelEdit"></channel-Edit>
   </div>
 </template>
 
