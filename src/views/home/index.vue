@@ -59,7 +59,7 @@
     <!-- 弹出层组件-moreAction -->
      <more-action @handleSuccess='handleSuccess' v-if="currentArticle" :article='currentArticle' v-model="showMoreAction"></more-action>
      <!-- 底部弹出层 -->
-     <channel-Edit :active='activeIndex' :channels='channels' v-model="showChannelEdit"></channel-Edit>
+     <channel-Edit @activeChange='handleChange' :active='activeIndex' :channels='channels' v-model="showChannelEdit"></channel-Edit>
   </div>
 </template>
 
@@ -171,6 +171,11 @@ export default {
       })
       // 删除指定位置的元素
       articles.splice(index, 1)
+    },
+    // 在频道管理组件中,点击我的频道,索引发生变化的时候执行
+    handleChange (index) {
+      this.activeIndex = index
+      this.showChannelEdit = false
     }
   },
   computed: {
