@@ -66,6 +66,7 @@ import { getchannels } from '../../api/channel'
 import { getArticles } from '../../api/article'
 import Vue from 'vue'
 import { Lazyload } from 'vant'
+import { getItem, setItem } from '../../utils/localStorage'
 import MoreAction from '../home/components/MoreAction'
 // import channelEdit from '../home/components/ChannelEdit' // 加载弹出层组件
 // options 为可选参数，无则不传
@@ -105,10 +106,25 @@ export default {
     },
     // 渲染频道列表
     async loadingchannels () {
-      const data = await getchannels()
+      let channels = []
+      // 1.如果用户登录,发送请求,获取数据
+      if (this.$store.state.user) {
+        const data = await getchannels()
+        channels = data.channels
+      } else {
+        // 2.如果用户没有登录,先去本地储存中获取数据,如果没有数据再次发送请求
+        // 如果本地储存中没有值,获取的是null
+        channels = getItem('channels')
+        if (!channels) {
+          const data = await getchannels()
+          channels = data.channels
+          // 储存到本地储存中
+          setItem('channels', channels)
+        }
+      }
       // 给所有的频道设置,事件搓和文章数组
-      console.log(data)
-      data.channels.forEach(channel => {
+      // console.log(data)
+      channels.forEach(channel => {
         channel.timestamp = null
         channel.articled = []
         // 上拉加载
@@ -117,7 +133,7 @@ export default {
         // 下拉刷新
         channel.pullLoading = false
       })
-      this.channels = data.channels
+      this.channels = channels
       //   console.log(this.channels)
     },
     // 下拉加载更多
