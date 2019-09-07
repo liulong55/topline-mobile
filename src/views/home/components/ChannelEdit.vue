@@ -47,6 +47,7 @@
     <van-cell title="推荐频道" label="点击添加频道" />
     <van-grid>
       <van-grid-item
+      @click="handleChannelItem(item)"
         v-for="item in recommendChannels"
         :key="item.id"
         :text="item.name"
@@ -56,7 +57,7 @@
 </template>
 
 <script>
-import { getAllChannels, deleteChannel } from '../../../api/channel'
+import { getAllChannels, deleteChannel, addChannel } from '../../../api/channel'
 import { mapState } from 'vuex'
 import { setItem } from '../../../utils/localStorage'
 export default {
@@ -136,6 +137,19 @@ export default {
           // 2.4没有登录,把频道列表记录到本地储存中
           setItem('channels', this.channels)
         }
+      }
+    },
+    // 点击推荐频道的时候
+    async handleChannelItem (channel) {
+      // 1.把channel添加到我的频道
+      this.channels.push(channel)
+      // 2.判断是否登录
+      if (this.user) {
+        // 3.如果登录,发生请求
+        await addChannel(channel.id, this.channels.length)
+      } else {
+        // 4.没有登录,把我的频道储存到本地储存中
+        setItem('channels', this.channels)
       }
     }
   },
