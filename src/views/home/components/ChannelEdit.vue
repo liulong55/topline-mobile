@@ -4,7 +4,39 @@
   :value='value'
   @input="$emit('input',$event)"
   :style="{ height: '80%' }"
-/>
+>
+    <van-cell icon="cross" @click="$emit('input', false)"/>
+    <!-- 我的频道 -->
+    <van-cell title="我的频道" label="点击进入频道">
+      <van-button
+        round
+        type="danger"
+        size="mini"
+      >编辑</van-button>
+    </van-cell>
+    <van-grid>
+      <van-grid-item
+        v-for="value in 8"
+        :key="value"
+        text="文字"
+      >
+        <van-icon
+          slot="icon"
+          class="close-icon"
+          name="close"
+        />
+      </van-grid-item>
+    </van-grid>
+    <!-- 推荐频道 -->
+    <van-cell title="推荐频道" label="点击添加频道" />
+    <van-grid>
+      <van-grid-item
+        v-for="value in 8"
+        :key="value"
+        text="文字"
+      />
+    </van-grid>
+</van-popup>
 </template>
 
 <script>
@@ -19,6 +51,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang='less' scoped>
+.close-icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
 </style>
