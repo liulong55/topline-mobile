@@ -142,7 +142,13 @@ export default {
     // 点击推荐频道的时候
     async handleChannelItem (channel) {
       // 1.把channel添加到我的频道
+      this.$set(channel, 'timestamp', null)
+      this.$set(channel, 'articles', [])
+      this.$set(channel, 'loading', false)
+      this.$set(channel, 'finished', false)
+      this.$set(channel, 'pullLoading', false)
       this.channels.push(channel)
+      //   console.log(channels)
       // 2.判断是否登录
       if (this.user) {
         // 3.如果登录,发生请求
