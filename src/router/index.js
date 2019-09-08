@@ -31,6 +31,13 @@ export default new Router({
       path: '/search',
       name: 'search',
       component: () => import(/* webpackChunkName: "search" */ '../views/Search.vue')
+    },
+    {
+      path: '/search-result/:q',
+      name: 'search-result',
+      // 路由跳转的时候,对应的组件把动态路由参数,传递给组件
+      props: true,
+      component: () => import(/* webpackChunkName: "search-result" */ '../views/SearchResult.vue')
     }
   ]
 })

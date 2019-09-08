@@ -22,7 +22,7 @@
             @load="onLoad"
           >
             <van-cell
-              v-for="item in currentChannel.articled"
+              v-for="item in currentChannel.articles"
               :key="item.art_id.toString()"
               :title="item.title"
             >
@@ -101,7 +101,7 @@ export default {
       console.log(data)
       // 记录文章列表,记录最后一条数据的事件搓
       this.currentChannel.timestamp = data.pre_timestamp
-      this.currentChannel.articled.push(...data.results)
+      this.currentChannel.articles.push(...data.results)
 
       this.currentChannel.loading = false
       if (data.results.length === 0) {
@@ -130,7 +130,7 @@ export default {
       // console.log(data)
       channels.forEach(channel => {
         channel.timestamp = null
-        channel.articled = []
+        channel.articles = []
         // 上拉加载
         channel.loading = false
         channel.finished = false

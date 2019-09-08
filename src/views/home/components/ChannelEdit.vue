@@ -148,9 +148,7 @@ export default {
       this.$set(channel, 'finished', false)
       this.$set(channel, 'pullLoading', false)
       console.log(this.channels)
-      console.log(channel)
       this.channels.push(channel)
-      //   console.log(channels)
       // 2.判断是否登录
       if (this.user) {
         // 3.如果登录,发生请求
