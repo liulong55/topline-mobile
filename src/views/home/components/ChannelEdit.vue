@@ -147,6 +147,8 @@ export default {
       this.$set(channel, 'loading', false)
       this.$set(channel, 'finished', false)
       this.$set(channel, 'pullLoading', false)
+      console.log(this.channels)
+      console.log(channel)
       this.channels.push(channel)
       //   console.log(channels)
       // 2.判断是否登录
