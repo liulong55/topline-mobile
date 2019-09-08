@@ -27,17 +27,26 @@ export default new Router({
       name: 'login',
       component: () => import(/* webpackChunkName: "login" */ '../views/login/index.vue')
     },
-    {
+    { // 搜索栏
       path: '/search',
       name: 'search',
       component: () => import(/* webpackChunkName: "search" */ '../views/Search.vue')
     },
     {
+      // 搜索栏点击或者回车进去
       path: '/search-result/:q',
       name: 'search-result',
       // 路由跳转的时候,对应的组件把动态路由参数,传递给组件
       props: true,
       component: () => import(/* webpackChunkName: "search-result" */ '../views/SearchResult.vue')
+    },
+    {
+      // 搜索栏列表进去,点击或者回车的详细内容
+      path: '/detail/:id',
+      name: 'detail',
+      // 路由跳转的时候,对应的组件把动态路由参数,传递给组件
+      props: true,
+      component: () => import(/* webpackChunkName: "detail" */ '../views/detail/index.vue')
     }
   ]
 })

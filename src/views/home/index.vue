@@ -21,7 +21,9 @@
             finished-text="没有更多了"
             @load="onLoad"
           >
+          <!-- 点击列表中的任意跳转到相对的文章详情,这用的是编程式导航,把id带过去 -->
             <van-cell
+            @click="$router.push({name:'detail',params:{id:item.art_id.toString()}})"
               v-for="item in currentChannel.articles"
               :key="item.art_id.toString()"
               :title="item.title"
@@ -48,7 +50,7 @@
                   <span>{{item.comm_count}}</span>&nbsp;
                   <span>{{item.pubdate |fmtDate}}</span>&nbsp;
                   <!-- 点击×按钮,记录当前的文章对象 -->
-                  <van-icon name="cross" class="close" @click="handleAction(item)" />
+                  <van-icon name="cross" class="close" @click.stop="handleAction(item)" />
                 </p>
               </div>
             </van-cell>

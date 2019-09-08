@@ -39,6 +39,7 @@
 import { getSuggestion } from '../api/search'
 import { mapState } from 'vuex'
 import * as storageTools from '../utils/localStorage'
+import _ from 'lodash'
 export default {
   name: 'Search',
   data () {
@@ -79,7 +80,7 @@ export default {
     },
     onCancel () {},
     // 在文本框输入的过程中获取搜索提示
-    async handleInput () {
+    handleInput: _.debounce(async function () {
       if (this.value.length === 0) {
         /// 判断是否为空
         return
@@ -90,7 +91,7 @@ export default {
       } catch (error) {
         console.log(error)
       }
-    },
+    }, 300),
     // 点击历史记录的删除按钮
     handleDelete (index) {
       this.histories.splice(index, 1)
