@@ -149,7 +149,7 @@ export default {
         withTop: 1
       })
       // 把数组放到数组的最前面(最新数据)
-      this.currentChannel.articled.unshift(...data.results)
+      this.currentChannel.articles.unshift(...data.results)
       this.success = `加载了${data.results.length}条数据`
       // 设置加载完成
       this.currentChannel.pullLoading = false
@@ -165,7 +165,7 @@ export default {
       // 去掉当前的文章数据
       // 找到当前文章在数组中的索引
       // findindex()查找第一个满足条件的元素的索引
-      const articles = this.currentChannel.articled
+      const articles = this.currentChannel.articles
       const index = articles.findIndex((item) => {
         return item.art_id === this.currentArticle.art_id
       })
