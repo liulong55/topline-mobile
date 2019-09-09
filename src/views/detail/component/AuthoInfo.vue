@@ -10,16 +10,45 @@
     <div>
       <van-button
         type="danger"
-        :loading="false"
-      >关注</van-button>
+        :loading="loading"
+        @click="handleFollow"
+      >{{article.is_followed ?'已':''}}关注</van-button>
     </div>
   </div>
 </template>
 
 <script>
+import { followUser, unFollowUser } from '../../../api/user'
 export default {
   name: 'AuthorInfo',
-  props: ['article']
+  props: ['article'],
+  data () {
+    return {
+      loading: false
+    }
+  },
+  methods: {
+    // 点击按钮,关注或者取消关注作者
+    async handleFollow () {
+      this.loading = true
+      // 判断是否登录
+      try {
+        // 判断是否已经关注
+        if (this.article.is_followed) {
+          // 如果已经关注,取消关注
+          await unFollowUser(this.article.aut_id)
+          this.article.is_followed = false
+        } else {
+          // 没有关注去关注
+          await followUser(this.article.aut_id)
+          this.article.is_followed = true
+        }
+      } catch (error) {
+        this.$toast.fail('操作失败')
+      }
+      this.loading = false
+    }
+  }
 }
 </script>
 

@@ -25,3 +25,14 @@ export const blacklists = (id) => {
     target: id
   })
 }
+// 关注用户
+export const followUser = (id) => {
+  return request.post('/app/v1_0/user/followings', {
+    // 关注用户的id
+    target: id
+  })
+}
+// 取消关注用户
+export const unFollowUser = (id) => {
+  return request.delete(`/app/v1_0/user/followings/${id}`)
+}
