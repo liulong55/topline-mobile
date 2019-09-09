@@ -46,3 +46,22 @@ export const reportArticle = ({
 export const getArticle = (id) => {
   return request.get(`/app/v1_0/articles/${id}`)
 }
+
+// 点赞 文章的id
+export const likeArticle = (id) => {
+  return request.post('/app/v1_0/article/likings', {
+    target: id
+  })
+}
+
+// 取消对文章点赞
+export const unLikeArticle = (id) => {
+  return request.delete(`/app/v1_0/article/likings/${id}`)
+}
+
+// 对文章不喜欢上面有
+
+// 取消对文章不喜欢
+export const unDislikeArticle = (id) => {
+  return request.delete(`/app/v1_0/article/dislikes/${id}`)
+}
