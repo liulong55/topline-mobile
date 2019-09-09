@@ -25,6 +25,7 @@ export const blacklists = (id) => {
     target: id
   })
 }
+
 // 关注用户
 export const followUser = (id) => {
   return request.post('/app/v1_0/user/followings', {
