@@ -12,7 +12,14 @@ export default {
           message: '是否要跳转到登录页面'
         }).then(() => {
           // 点击确认按钮,跳到登录页面
-          this.$router.push('/login')
+          this.$router.push({
+            path: '/login',
+            // params 动态路由参数
+            // query 查询字符串
+            query: {
+              redirect: this.$route.fullPath
+            }
+          })
         }).catch(() => {
           // on cancel //点击取消执行
         })
