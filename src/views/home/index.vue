@@ -60,8 +60,8 @@
     </van-tabs>
     <!-- 弹出层组件-moreAction -->
      <more-action @handleSuccess='handleSuccess' v-if="currentArticle" :article='currentArticle' v-model="showMoreAction"></more-action>
-     <!-- 底部弹出层 -->
-     <channel-Edit @activeChange='handleChange' :active='activeIndex' :channels='channels' v-model="showChannelEdit"></channel-Edit>
+     <!-- 底部弹出层,频道管理 -->
+     <channel-Edit @last='handleLast' @activeChange='handleChange' :active='activeIndex' :channels='channels' v-model="showChannelEdit"></channel-Edit>
   </div>
 </template>
 
@@ -178,6 +178,10 @@ export default {
     handleChange (index) {
       this.activeIndex = index
       this.showChannelEdit = false
+    },
+    // 当频道管理删除的是,激活索引是数组最后一个
+    handleLast () {
+      this.activeIndex--
     }
   },
   computed: {

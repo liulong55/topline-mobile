@@ -121,8 +121,13 @@ export default {
         // 关闭对话框
         this.$emit('activeChange', index)
       } else {
+        // 判断当前激活项的索引,是否是数字中的最后一个
+        if (this.active === this.channels.length - 1) {
+          this.$emit('last')
+        }
+
         // 2.编辑模式
-      // 2.1把点击的频道,从我的频道移除
+        // 2.1把点击的频道,从我的频道移除
         this.channels.splice(index, 1)
         // 2.2判断是否登录
         // 通过mapstate做了映射
