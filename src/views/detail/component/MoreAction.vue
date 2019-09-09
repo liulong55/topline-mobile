@@ -26,7 +26,9 @@ export default {
     // 点赞和取消点赞
     async handleLike () {
       // 判断是否登录
-
+      if (!this.$checkLogin()) {
+        return // 没登录直接停
+      }
       try {
         // 点赞或者取消点赞
         if (this.article.attitude === 1) {

@@ -9,6 +9,8 @@ import zhCN from 'vee-validate/dist/locale/zh_CN' // 导入中文包
 import 'vant/lib/index.css'
 import '../src/styles/index.less'
 import { fmtDate } from './utils/dayjs' // 时间包
+import Checklogin from './utils/CheckLogin' // 注册插件
+Vue.use(Checklogin) // 全局注册
 Vue.use(Vant)
 Vue.use(VeeValidate, {
   // 文本框中触发验证的事件，默认是input
