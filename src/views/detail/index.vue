@@ -21,6 +21,8 @@
       <comment-list :isArticle='true' :id="article.art_id.toString()"></comment-list>
       <!-- 发布评论 -->
       <send-comment :target='article.art_id.toString()' :isArticle='true'></send-comment>
+      <!-- 加载评论回复的组件,触发事件但不在这 -->
+      <reply-list v-model="showReplyList"></reply-list>
     </div>
   </div>
 </template>
@@ -31,12 +33,15 @@ import AuthorInfo from '../detail/component/AuthoInfo' // 加载作者信息组�
 import MoreAction from '../detail/component/MoreAction' // 加载更多操作
 import CommentList from '../detail/component/CommentList'// 加载评论列表
 import SendComment from '../detail/component/SendComment' // 加载发布评论组件
+import ReplyList from '../detail/component/ReplyList' // 加载评论回复的组件
+import { mapState } from 'vuex'
 export default {
   components: {
     AuthorInfo,
     MoreAction,
     CommentList,
-    SendComment
+    SendComment,
+    ReplyList
   },
   name: 'Detail',
   props: ['id'],
@@ -44,6 +49,9 @@ export default {
     return {
       article: null
     }
+  },
+  computed: {
+    ...mapState(['showReplyList'])
   },
   methods: {
     // 获取文章详情
