@@ -1,4 +1,6 @@
 import request from '../utils/request'
+
+// 获取评论列表
 export const getComments = ({
   isArticle, // 源id,文章id或评论id
   source, // 获取评论数据的偏移量，值为评论id，表示从此id的数据向后取，不传表示从第一页开始读取数据
