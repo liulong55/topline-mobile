@@ -20,7 +20,7 @@
       <!-- 评论列表 -->
       <comment-list :isArticle='true' :id="article.art_id.toString()"></comment-list>
       <!-- 发布评论 -->
-      <send-comment :isArticle='true'></send-comment>
+      <send-comment :target='article.art_id.toString()' :isArticle='true'></send-comment>
     </div>
   </div>
 </template>
@@ -63,15 +63,46 @@ export default {
 </script>
 
 <style lang="less" scoped>
+// .article {
+//   margin-top: 48px;
+//   padding: 0px 20px;
+//   .article-title {
+//     font-size: 20px;
+//     font-weight: bold;
+//   }
+//   .article-content {
+//     font-size: 14px;
+//   }
+// }
 .article {
-  margin-top: 48px;
+  // 当内容超出容器的宽度，强制换行
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  margin-top: 92px;
   padding: 0px 20px;
+  margin-bottom: 124px;
+
   .article-title {
-    font-size: 20px;
+    font-size: 40px;
     font-weight: bold;
   }
   .article-content {
+    font-size: 26px;
+  }
+  .article-content /deep/ code, .article-content /deep/ pre {
+    overflow: scroll;
+    margin: 0px 2px;
+    padding: .5em;
     font-size: 14px;
+    color: rgb(131,148,150);
+    line-height: 18px;
+    font-family: Consolas, Inconsolata, Courier, monospace;
+    display: block;
+    word-spacing: 0px;
+    letter-spacing: 0px;
+    background: rgb(0,43,54);
   }
 }
+
 </style>
