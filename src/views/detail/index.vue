@@ -22,7 +22,7 @@
       <!-- 发布评论 -->
       <send-comment :target='article.art_id.toString()' :isArticle='true'></send-comment>
       <!-- 加载评论回复的组件,触发事件但不在这 -->
-      <reply-list v-model="showReplyList"></reply-list>
+      <reply-list v-model="showReplyList" :art_id='id'></reply-list>
     </div>
   </div>
 </template>
@@ -44,6 +44,7 @@ export default {
     ReplyList
   },
   name: 'Detail',
+  // 文章的id
   props: ['id'],
   data () {
     return {
