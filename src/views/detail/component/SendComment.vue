@@ -44,7 +44,10 @@ export default {
         console.log(data)
         // data.new_obj刚发送的评论
         // 触发事件
-        eventHub.$emit('sendSuccess', data.new_obj)
+        eventHub.$emit('sendSuccess', {
+          comment: data.new_obj,
+          isArticle: this.isArticle
+        })
         this.content = ''
       } catch (error) {
         console.log(error)
