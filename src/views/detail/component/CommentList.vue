@@ -23,7 +23,7 @@
         <p>
           <span>{{comment.pubdate |fmtDate}}</span>
           ·
-          <span @click="handleShowReplyList">回复{{comment.reply_count}}</span>
+          <span @click="handleShowReplyList(comment)">回复{{comment.reply_count}}</span>
         </p>
       </div>
     </van-cell>
@@ -71,8 +71,10 @@ export default {
       }
     },
     // 点击回去按钮,显示回去评论的列表
-    handleShowReplyList () {
+    handleShowReplyList (comment) {
       this.$store.commit('setShowReplyList', true)
+      // 把comment记录到仓库里
+      this.$store.commit('setCurrentComment', comment)
     }
   }
 }
