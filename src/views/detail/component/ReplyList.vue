@@ -44,12 +44,19 @@
 import { mapState } from 'vuex'
 import CommentList from './CommentList'
 import SendComment from './SendComment'
+import eventHub from '../../../utils/eventHub'
 export default {
   name: 'ReplyList',
   props: ['value', 'art_id'],
   components: {
     CommentList,
     SendComment
+  },
+  created () {
+    // 让添加之后显示个数改变
+    eventHub.$on('sendSuccess', () => {
+      this.currentComment.reply_count++
+    })
   },
   computed: {
     ...mapState(['currentComment'])
