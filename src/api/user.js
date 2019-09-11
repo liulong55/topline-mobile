@@ -37,3 +37,7 @@ export const followUser = (id) => {
 export const unFollowUser = (id) => {
   return request.delete(`/app/v1_0/user/followings/${id}`)
 }
+// 获取用户自己的信息
+export const getUserInfo = () => {
+  return request.get('/app/v1_0/user')
+}
